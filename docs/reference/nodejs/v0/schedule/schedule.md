@@ -52,12 +52,25 @@ schedule('send-reminder').every('3 minutes', async (ctx) => {
 });
 
 // Create a schedule that runs every 3 hours
-schedule('send-reminder').every('3 hours', async (ctx) => {
+schedule('send-reminder2').every('3 hours', async (ctx) => {
   // Code which sends a reminder
 });
 
 // Create a schedule that runs every 3 days
-schedule('send-reminder').every('3 days', async (ctx) => {
+schedule('send-reminder3').every('3 days', async (ctx) => {
+  // Code which sends a reminder
+});
+```
+
+### Using CRON expressions
+
+You can also use CRON expressions to create schedules.
+
+```javascript
+import { schedule } from '@nitric/sdk';
+
+// Create a schedule that runs everyday at 5:00am
+schedule('run-batch').cron('0 5 * * *', async (ctx) => {
   // Code which sends a reminder
 });
 ```
