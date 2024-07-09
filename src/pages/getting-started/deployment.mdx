@@ -41,12 +41,11 @@ When using stacks to deploy to different environments such as a development, tes
 
 When deploying the application, you can add extra configuration for specific services or globally for all services. This configuration is unique to each stack file, allowing you to deploy the same application to different environments with different configurations. Since the configuration options available are unique to the cloud platform and the services they offer these settings are typically different between provider implementations.
 
-Below is an example of configuration added to an AWS stack to augment the memory, timeout, and telemetry sampling percentage for deployed services.
+Below is an example of configuration added to an AWS stack to augment the memory and timeouts for deployed services.
 
 ```yaml {{ tag: "nitric.aws-deployment.yaml" }}
 provider: nitric/aws@1.1.0
 region: us-east-1
-telemetry: 10
 config:
   default:
     lambda:

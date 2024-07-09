@@ -30,8 +30,6 @@ adminemail: test@example.com
 config:
   # How services without a type will be deployed
   default:
-    # configure a sample rate for telemetry (between 0 and 1) e.g. 0.5 is 50%
-    telemetry: 0
     # configure services to deploy to Google Cloud Run
     # see: https://learn.microsoft.com/en-us/azure/container-apps/containers#configuration
     containerapps: # Available since v0.26.0
@@ -46,7 +44,6 @@ config:
   # Additional deployment types
   # You can target these types by setting a `type` in your project configuration
   big-service:
-    telemetry: 0
     containerapps:
       memory: 1
       min-replicas: 2

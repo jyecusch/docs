@@ -52,8 +52,6 @@ apis:
 config:
   # How services without a type will be deployed
   default:
-    # configure a sample rate for telemetry (between 0 and 1) e.g. 0.5 is 50%
-    telemetry: 0
     # configure services to deploy to AWS lambda
     lambda: # Available since v0.26.0
       # set 128MB of RAM
@@ -79,7 +77,6 @@ config:
   # Additional deployment types
   # You can target these types by setting a `type` in your project configuration
   big-service:
-    telemetry: 0
     lambda:
       memory: 1024
       timeout: 60
@@ -124,8 +121,6 @@ apis:
 config:
   # How services without a type will be deployed
   default:
-    # configure a sample rate for telemetry (between 0 and 1) e.g. 0.5 is 50%
-    telemetry: 0
     # configure services to deploy to AWS lambda
     lambda: # Available since v0.26.0
       # set 128MB of RAM
@@ -142,7 +137,6 @@ config:
   # Additional deployment types
   # You can target these types by setting a `type` in your project configuration
   big-service:
-    telemetry: 0
     lambda:
       memory: 1024
       timeout: 60
