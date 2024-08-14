@@ -621,7 +621,7 @@ func validate(ctx *handler.HttpContext, next handler.HttpHandler) (*handler.Http
 
 ```dart
 Future<HttpContext> validate(HttpContext ctx) async {
-  if (ctx.req.headers.containsKey("content-type")) {
+  if (!ctx.req.headers.containsKey("Content-Type")) {
     ctx.res.status = 400;
     ctx.res.body = "header Content-Type is required";
 
@@ -783,7 +783,7 @@ final customersApi = Nitric.api("customers");
 customersApi.get("/customers", getAllCustomers, middlewares: [logRequest, validate]);
 
 // Inline using .route()
-customersApi.route("/customers").get(getAllCustomers, middlewares: [logRequest, validate]);
+customersApi.route("/customers", middlewares: [logRequest, validate]).get(getAllCustomers);
 ```
 
 </CodeGroup>
