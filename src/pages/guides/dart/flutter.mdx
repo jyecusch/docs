@@ -7,7 +7,7 @@ export const title_meta = 'Building your first Flutter application with Nitric'
 
 In this guide we'll go over how to create a basic Flutter application using the Nitric framework as the backend. Dart does not have native support on AWS, GCP, or Azure, so by using the Nitric framework you can use your skills in Dart to create an API and interact with cloud services in an intuitive way.
 
-The application will have a Flutter frontend that will generate wordpairs that can be added to a list of favourites. The backend will be a Nitric API with a key value store that can store favourited wordpairs. This application will be simple, but requires that you know the basics of Flutter and Nitric.
+The application will have a Flutter frontend that will generate word pairs that can be added to a list of favourites. The backend will be a Nitric API with a key value store that can store liked word pairs. This application will be simple, but requires that you know the basics of Flutter and Nitric.
 
 ## Getting started
 
@@ -80,7 +80,7 @@ dependencies:
 
 ### Building the API
 
-Define the API and the key value store in the `main.dart` service file. This will create an API named `main` and a kv store named `favourites` and give the function permissions to get, set, and delete documents. The `favourites` store will contain keys with the name of the favourite and then a value with the favourites object.
+Define the API and the key value store in the `main.dart` service file. This will create an API named `main`, a key value store named `favourites`, and the function permissions to get, set, and delete documents. The `favourites` store will contain keys with the name of the favourite and then a value with the favourites object.
 
 ```dart {{ label: "lib/services/main.dart" }}
 import 'package:nitric_sdk/nitric.dart';
@@ -249,7 +249,7 @@ The first will show the current generated word along with a history of all previ
 
 ![main flutter page](/docs/images/guides/flutter/main_page_final.png)
 
-The second page will show the list of favourites if there are any, otherwise it will display that there are no word pairs currently favourited.
+The second page will show the list of favourites if there are any, otherwise it will display that there are no word pairs currently liked.
 
 ![favourites flutter page](/docs/images/guides/flutter/favourites_page_final.png)
 
@@ -308,7 +308,7 @@ class FavouritesProvider extends ChangeNotifier {
 }
 ```
 
-We'll then add a method for getting a list of favourites and notifying the listeneres. For this we require the `http` package to make requests to our API.
+We'll then add a method for getting a list of favourites and notifying the listeners. For this we require the `http` package to make requests to our API.
 
 ```bash
 flutter pub add http
@@ -341,7 +341,7 @@ Future<List<Favourite>> fetchData() async {
 }
 ```
 
-We can then make a function for listeners to check if a word pair has been favourited. This requires the `english_words` package for importing the `WordPair` typing.
+We can then make a function for listeners to check if a word pair has been liked. This requires the `english_words` package for importing the `WordPair` typing.
 
 ```dart {{ label: "lib/providers/favourites.dart" }}
 /// Add english words import
@@ -359,7 +359,7 @@ bool hasFavourite(WordPair pair) {
 }
 ```
 
-Finally, we'll define a function for toggling a word pair as being liked or unliked.
+Finally, we'll define a function for toggling a word pair as being liked or not.
 
 ```dart {{ label: "lib/providers/favourites.dart" }}
 /// Toggles whether a favourite being liked or unliked.
@@ -481,7 +481,7 @@ class GeneratorPage extends StatelessWidget {
 }
 ```
 
-To test this generation we can build the application entrypoint to run our paplication. In this application we use a `MultiProvider` to supply the child pages with the ability to listen to the `FavouritesProvider` and the `WordProvider`.
+To test this generation we can build the application entrypoint to run our application. In this application we use a `MultiProvider` to supply the child pages with the ability to listen to the `FavouritesProvider` and the `WordProvider`.
 
 ```dart {{ label: "lib/main.dart" }}
 import 'package:flutter/material.dart';
@@ -660,7 +660,7 @@ If you reload the flutter app it should now display your history when you click 
 
 ### Favourites Page
 
-The favourites page will simply list all the favourites and the number that have been favourited:
+The favourites page will simply list all the favourites and the number that have been liked:
 
 ```dart {{ label: "lib/pages/favourites.dart" }}
 import 'package:flutter/material.dart';
@@ -798,7 +798,7 @@ class Application extends StatelessWidget {
 }
 ```
 
-For now, you can test both pages by swapping the `selectedIndex` manually. We'll then want to build out a navigation bar for desktop and for mobile. For this we will use a `LayoutBuilder` to check if the screen width is less than 450px.
+For now, you can test both pages by swapping the `selectedIndex` manually. We'll then want to build out a navigation bar for desktop and for mobile. For this we will use a `LayoutBuilder` to check if the screen width is less than `450px`.
 
 ```dart {{ label: "lib/pages/home.dart" }}
 Widget build(BuildContext context) {
@@ -1079,7 +1079,7 @@ COPY --from=build /app/bin/main /app/bin/
 ENTRYPOINT ["/app/bin/main"]
 ```
 
-We can also add a `.dockerignore` to optimise our image further:
+We can also add a `.dockerignore` to optimize our image further:
 
 ```txt {{ label: "docker/flutter.dockerignore" }}
 build
