@@ -576,7 +576,7 @@ class HistoryListView extends StatefulWidget {
 class _HistoryListViewState extends State<HistoryListView> {
   final _key = GlobalKey();
 
-  // Create a mask which will make a fade out appearance by making a linear gradient of transparent -> opaque.
+  // Create a linear gradient mask from transparent to opaque.
   static const Gradient _maskingGradient = LinearGradient(
     colors: [Colors.transparent, Colors.black],
     stops: [0.0, 0.5],
@@ -855,7 +855,8 @@ return Row(
   children: [
     SafeArea(
       child: NavigationRail(
-        extended: constraints.maxWidth >= 600, // Display only icons if screen width is less than 600px
+        // Display only icons if screen width is less than 600px
+        extended: constraints.maxWidth >= 600,
         destinations: [
           NavigationRailDestination(
             icon: Icon(Icons.home),
@@ -1035,7 +1036,7 @@ runtimes:
 
 Create the Dockerfile at the same path as your runtime specifies. This Dockerfile is fairly straightforward, taking its
 
-```Dockerfile {{ label: "docker/flutter.dockerfile" }}
+```dockerfile {{ label: "docker/flutter.dockerfile" }}
 FROM dart:stable AS build
 
 # The Nitric CLI will provide the HANDLER arg with the location of our service
