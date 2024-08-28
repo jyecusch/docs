@@ -67,15 +67,8 @@ touch lib/services/main.dart
 
 You will also need to add Nitric to your `pubspec.yaml`.
 
-```yaml {{ label: "pubspec.yaml" }}
-dependencies:
-  flutter:
-    sdk: flutter
-
-  nitric_sdk:
-    git:
-      url: https://github.com/nitrictech/dart-sdk.git
-      ref: main
+```bash
+flutter pub add nitric_sdk
 ```
 
 ### Building the API
@@ -96,7 +89,7 @@ void main() {
 }
 ```
 
-We will define a favourites class to convert our JSON requests to Favourite objects and then back into JSON. Conversion to a `Map<String, dynamic` will also allow us to store the Favourites objects in the key value store. We can do this by defining `fromJson` and `toJson` methods, allowing the builtin `jsonEncode` and `jsonDecode` methods to understand our model. By defining this as a class it unifies the way the frontend and backend handle Favourites objects, while leaving room for extension for additional metadata.
+We will define a favourites class to convert our JSON requests to Favourite objects and then back into JSON. Conversion to a `Map<String, dynamic>` will also allow us to store the Favourites objects in the key value store. We can do this by defining `fromJson` and `toJson` methods, allowing the builtin `jsonEncode` and `jsonDecode` methods to understand our model. By defining this as a class it unifies the way the frontend and backend handle Favourites objects, while leaving room for extension for additional metadata.
 
 ```dart {{ label: "lib/favourite.dart" }}
 class Favourite {
@@ -134,6 +127,7 @@ api.get("/favourites", (ctx) async {
 
   // Return the body as a list of favourites
   ctx.res.body = jsonEncode(favourites);
+  ctx.res.headers["Content-Type"] = ["application/json"];
 
   return ctx;
 });
@@ -210,7 +204,7 @@ Future<HttpContext> addCors(HttpContext ctx) async {
 We can then add the options routes and add the CORS middleware to the API. When we add a middleware at the API level it will run on every request to any route on that API.
 
 ```dart {{ label: "lib/services/main.dart" }}
-import 'package:flutter_blog/cors.dart';
+import 'package:word_generator/cors.dart';
 
 ...
 
@@ -241,9 +235,9 @@ You can test the routes using the dashboard or cURL commands in your terminal.
 [{"name": "testpair"}]
 ```
 
-## Frontend
+## Flutter Frontend
 
-We can now start on the frontend. The application will contain two pages which can be navigated between by using the
+We can now start on the frontend. The application will contain two pages which can be navigated between by using the side navigation.
 
 The first will show the current generated word along with a history of all previously generated words. It will have a button to like the word and a button to generate the next word.
 
@@ -994,7 +988,9 @@ class _HomePageState extends State<HomePage> {
 
 ## Deployment
 
-At this point, you can deploy the application to any supported cloud provider. Start by setting up your credentials and any configuration for the cloud you prefer:
+At this point, we can get started on deploying our application. The frontend application deployment depends on which platform you wish to deploy to. You can take a look at the Flutter documentation for this [here](https://docs.flutter.dev/deployment). The backend will be deployed to one of the cloud platforms, AWS, Google Cloud, or Azure. This guide will demonstrate deploying to AWS.
+
+For the backend, start by setting up your credentials and any configuration for the cloud you prefer:
 
 - [AWS](/reference/providers/aws)
 - [Azure](/reference/providers/azure)
