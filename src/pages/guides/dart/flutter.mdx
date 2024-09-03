@@ -116,14 +116,13 @@ import 'dart:convert';
 
 api.get("/favorites", (ctx) async {
   // Get a list of all the keys in the store
-  var keyStream = await favoritesKV.keys();
+  var keys = await favouritesKV.keys();
 
-  // Convert the keys to a list of favorites
-  var favorites = await keyStream.asyncMap((k) async {
-    final favorite = await favoritesKV.get(k);
+  var favourites = await Future.wait(keys.map((k) async {
+    final favourite = await favouritesKV.get(k);
 
-    return favorite;
-  }).toList();
+    return favourite;
+  }).toList());
 
   // Return the body as a list of favorites
   ctx.res.body = jsonEncode(favorites);
@@ -147,10 +146,10 @@ api.post("/favorite", (ctx) async {
   final favorite = favorite.fromJson(req);
 
   // search for the key, filtering by the name of the favorite
-  final stream = await favoritesKV.keys(prefix: favorite.name);
+  final keys = await favoritesKV.keys(prefix: favorite.name);
 
   // checks if the favorite exists in the list of keys
-  final exists = await stream.any((f) => f == favorite.name);
+  final exists = keys.any((f) => f == favorite.name);
 
   // if it exists delete and return
   if (exists) {
