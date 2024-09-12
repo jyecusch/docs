@@ -1,15 +1,25 @@
 export const description =
   'Use the Nitric framework to easily build and deploy a backend for your Flutter application'
 
-export const title_meta = 'Building your first Flutter application with Nitric'
+export const title_meta = 'Building a Full Stack Flutter Application in Dart'
 
-# Building a Flutter Application with Nitric
+# Building a Full Stack Flutter Application in Dart
+
+Flutter is an open-source development framework developed by Google for developing cross-platform applications. It is used by frontend and full-stack developers for building cross-platform user interfaces from a single codebase. The abstractions that are built into the framework allow it to support mobile, web, and applications for MacOS, Windows, and Linux.
+
+Cross-platform development has become increasingly important due to the growing demand for mobile apps, cost savings, and increased reach and engagement. By developing an application once using cross-platform technologies like Flutter, companies can reduce development costs, simplify maintenance and updates, and target a broader audience across different platforms, devices, and operating systems.
+
+Cross-platform development often faces criticism regarding performance and native feature access; however, Flutter provides features to achieve high performance while supporting native features. This close-to-native performance is enabled through two key aspects: the open-source programming language Dart, optimized for building UIs by compiling to native machine code; and Flutter's use of Skia, a graphics engine providing consistent rendering across different platforms. This leads to a unified experience for users and developers across various devices.
+
+Flutter further enhances developer experience with widgets - reusable components used to build applications. Developers can customize these widgets using composition, where complex layouts are created from smaller widgets. This approach simplifies the development process and allows for easy customization of user interfaces.
+
+When combined with Nitric, portability is taken to a whole new level. Together, they enable developers to create applications that are not only high-performance but also extremely portable across different devices, platforms, and even clouds. This complimentary integration empowers developers to build robust applications that can adapt to changing user needs and environments.
+
+## Getting started
 
 In this guide we'll go over how to create a basic Flutter application using the Nitric framework as the backend. Dart does not have native support on AWS, GCP, or Azure, so by using the Nitric framework you can use your skills in Dart to create an API and interact with cloud services in an intuitive way.
 
 The application will have a Flutter frontend that will generate word pairs that can be added to a list of favorites. The backend will be a Nitric API with a key value store that can store liked word pairs. This application will be simple, but requires that you know the basics of Flutter and Nitric.
-
-## Getting started
 
 To get started make sure you have the following prerequisites installed:
 
