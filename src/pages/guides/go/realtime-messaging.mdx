@@ -117,38 +117,34 @@ From here, let's add some features to that function that allow us to manage conn
 ### Register connections on connect
 
 ```go
-ws.On(handler.WebsocketConnect, func(ctx *handler.WebsocketContext, next handler.WebsocketHandler) (*handler.WebsocketContext, error) {
+ws.On(websockets.EventType_Connect, func(ctx *websockets.Ctx) {
   err := connections.Set(context.TODO(), ctx.Request.ConnectionID(), map[string]interface{}{
     "connectionId": ctx.Request.ConnectionID(),
   })
   if err != nil {
-    return ctx, err
+    return
   }
-
-  return next(ctx)
 })
 ```
 
 ### Remove connections on disconnect
 
 ```go
-ws.On(handler.WebsocketDisconnect, func(ctx *handler.WebsocketContext, next handler.WebsocketHandler) (*handler.WebsocketContext, error) {
+ws.On(websockets.EventType_Disconnect, func(ctx *websockets.Ctx) {
   err := connections.Delete(context.TODO(), ctx.Request.ConnectionID())
   if err != nil {
-    return ctx, err
+    return
   }
-
-  return next(ctx)
 })
 ```
 
 ### Broadcast messages to all connected clients
 
 ```go
-ws.On(handler.WebsocketMessage, func(ctx *handler.WebsocketContext, next handler.WebsocketHandler) (*handler.WebsocketContext, error) {
+ws.On(websockets.EventType_Message, func(ctx *websockets.Ctx) {
   connectionStream, err := connections.Keys(context.TODO())
   if err != nil {
-    return ctx, err
+    return
   }
 
   senderId := ctx.Request.ConnectionID()
@@ -166,11 +162,9 @@ ws.On(handler.WebsocketMessage, func(ctx *handler.WebsocketContext, next handler
     message := fmt.Sprintf("%s: %s", senderId, ctx.Request.Message())
     err = ws.Send(context.TODO(), connectionId, []byte(message))
     if err != nil {
-      return ctx, err
+      return
     }
   }
-
-  return next(ctx)
 })
 ```
 
@@ -186,8 +180,8 @@ import (
 	"context"
 	"fmt"
 
-	"github.com/nitrictech/go-sdk/handler"
 	"github.com/nitrictech/go-sdk/nitric"
+	"github.com/nitrictech/go-sdk/nitric/websockets"
 )
 
 func main() {
@@ -203,30 +197,26 @@ func main() {
 		return
 	}
 
-	ws.On(handler.WebsocketConnect, func(ctx *handler.WebsocketContext, next handler.WebsocketHandler) (*handler.WebsocketContext, error) {
+	ws.On(websockets.EventType_Connect, func(ctx *websockets.Ctx) {
 		err := connections.Set(context.TODO(), ctx.Request.ConnectionID(), map[string]interface{}{
 			"connectionId": ctx.Request.ConnectionID(),
 		})
 		if err != nil {
-			return ctx, err
+			return
 		}
-
-		return next(ctx)
 	})
 
-	ws.On(handler.WebsocketDisconnect, func(ctx *handler.WebsocketContext, next handler.WebsocketHandler) (*handler.WebsocketContext, error) {
+	ws.On(websockets.EventType_Disconnect, func(ctx *websockets.Ctx) {
 		err := connections.Delete(context.TODO(), ctx.Request.ConnectionID())
 		if err != nil {
-			return ctx, err
+			return
 		}
-
-		return next(ctx)
 	})
 
-	ws.On(handler.WebsocketMessage, func(ctx *handler.WebsocketContext, next handler.WebsocketHandler) (*handler.WebsocketContext, error) {
+	ws.On(websockets.EventType_Message, func(ctx *websockets.Ctx) {
 		connectionStream, err := connections.Keys(context.TODO())
 		if err != nil {
-			return ctx, err
+			return
 		}
 
 		senderId := ctx.Request.ConnectionID()
@@ -244,11 +234,9 @@ func main() {
 			message := fmt.Sprintf("%s: %s", senderId, ctx.Request.Message())
 			err = ws.Send(context.TODO(), connectionId, []byte(message))
 			if err != nil {
-				return ctx, err
+				return
 			}
 		}
-
-		return next(ctx)
 	})
 
 	if err := nitric.Run(); err != nil {
