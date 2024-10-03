@@ -291,10 +291,6 @@ const fullNav: FullNav = {
           href: '/concepts/introduction',
         },
         {
-          title: 'Infrastructure from Code (IfC)',
-          href: '/concepts/infrastructure-from-code',
-        },
-        {
           title: 'How Nitric works',
           href: '/concepts/how-nitric-works',
         },
@@ -3374,7 +3370,7 @@ export const useCurrentNav = () => {
   }
 
   const current = Object.keys(fullNav).find((navKey) =>
-    router.pathname.startsWith(`/${navKey}`)
+    router.pathname.startsWith(`/${navKey}`),
   )
 
   const navigation = current && fullNav[current] ? fullNav[current] : mainNav
@@ -3386,7 +3382,7 @@ export const useCurrentNav = () => {
     .flatMap((group) => group.links)
     .find((link) =>
       // clean out any trailing versions /v0 etc
-      link.href.startsWith(cleanedCurrent)
+      link.href.startsWith(cleanedCurrent),
     )
 
   let secondLevelParent: DocNavGroup['links'][0] | undefined
@@ -3398,7 +3394,7 @@ export const useCurrentNav = () => {
     if (nav) {
       for (const group of nav) {
         secondLevelParent = group.links.find(
-          (link) => link.href === cleanedCurrent
+          (link) => link.href === cleanedCurrent,
         )
 
         if (secondLevelParent) {
